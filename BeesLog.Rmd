@@ -1,0 +1,40 @@
+---
+title: "Bees Log"
+output: html_document
+---
+```{r}
+getwd()
+dir()
+```
+
+#### Monday, October 5
+
+Downloaded data.  Want to use OpenCV but can't seem to find R integration, might have to code in Python or C.  Will do initial exploratory analysis following [this link about EBImage](http://www.r-bloggers.com/r-image-analysis-using-ebimage/).  The benchmark analysis in Python is [here](http://blog.drivendata.org/2015/09/24/bees-benchmark/) and the information about OpenCV is [here](http://docs.opencv.org/modules/core/doc/intro.html).  I'm getting pretty excited about developing a package in R to integrate with OpenCV.  Here's how to install OpenCV on Linux: [here](http://docs.opencv.org/doc/tutorials/introduction/linux_install/linux_install.html#linux-installation) and here's a tutorial on developing R packages: [here](https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf). [This](https://www.openhub.net/p/r-opencv) is a link to a project that was started but has maybe lost steam.  You should also check out what Bioconductor can do. [Here's](http://rodrigoberriel.com/2014/10/installing-opencv-3-0-0-on-ubuntu-14-04/) a link to instructions for installing opencv on ubuntu14.04.
+
+##### Tuesday, October 6
+
+I had a tough time installing bioconductor and EBImage.  I had to install libfftw3-dev and libtiff5-dev.
+
+#### Wednesday October 7
+
+```{r message=FALSE}
+library(EBImage)
+library(dplyr)
+img1 <- readImage("images/train/1.jpg")
+display(img1)
+print(img1)
+trainLabels <- read.csv("train_labels.csv") %>% arrange(id)
+# Apis (honey bee) is coded 0 
+# Bombus (bumble bee) is coded 1
+# the data is 3/4 Bombus, 1/4 Apis
+head(trainLabels)
+apis1 <- readImage("images/train/4.jpg")
+display(apis1)
+```
+
+According to [this](http://www.honeybeesuite.com/honey-bee-or-bumble-bee/) website,
+
+> In North America there is only one species of honey bee, while there are about 40 species of bumble bee. That means that the honey bees you see will be more uniform than the bumble bees. Honey bees have narrow stripes on their abdomen that vary in color from yellow and gold to tan, brown, gray, or black... Bumble bees have wide bands of color that range from black to orange, tan, yellow, and white, and the bands start at the head and go all the way back. The different species of bumble bee have different colors and they are different sizes as well. Some are quite large, some much smaller. Both bumble bees and honey bees have hair, but bumble bees are robustly hairy: scary hairy. The hairs cover most parts of the bee from the head to the tip of the abdomen. The visible hairs on a honey bee are mostly at the front of the body. The abdomen has hairs too, but they are scant compared to those on a bumble bee.
+Although the hair and coloring are the most obvious differences, there are others: Honey bees (at least the females) have a much more pointed abdomen than bumble bees. Although a male honey bee has a rounded abdomen, you will rarely see one outside of the hive.
+Honey bees have an obvious wasp-waist, while bumble bees are thicker through the middle.
+The veination of the wings is different. Actually, the pattern of wing veins is commonly used to identify various bees. A particular cell in the forewing called the marginal cell is easy to identify in the honey bee. It is long, smooth, and curved like a sausage. The marginal cell in a bumble bee wing is shorter and irregular, with a wide end and a narrower end.
